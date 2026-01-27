@@ -57,12 +57,12 @@ header {
 }
 
 body > * {
-  background-color: #506ab9;
+  background-color: red;
   padding: 1%;
 }
 
 main, header, nav, article, aside, footer, section {
-  background-color: #aa2929;
+  background-color: rgba(90, 109, 165, 0.5);
   padding: 1%;
 }
 
