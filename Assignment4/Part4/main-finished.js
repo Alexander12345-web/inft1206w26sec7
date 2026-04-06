@@ -179,10 +179,12 @@ function loop() {
     ctx.fillRect(0, 0, width, height);
 
     for (const ball of balls) {
-        if (!ball.exists) continue;
+        // draw starting balls then check if they exist before updating and checking for collisions
         ball.draw();
-        ball.update();
-        ball.collisionDetect();
+        if (ball.exists) {
+            ball.update();
+            ball.collisionDetect();
+        }
     }
 
     // Update evil circle
