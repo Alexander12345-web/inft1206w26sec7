@@ -86,6 +86,7 @@ class EvilCircle extends Shape {
         this.color = "white";
         this.size = 10;
 
+
         // Add event list
         window.addEventListener("keydown", (e) => {
             switch (e.key) {
@@ -103,6 +104,34 @@ class EvilCircle extends Shape {
                     break;
             }
         });
+    }
+
+    // Draw method for evil circle
+    draw() {
+        ctx.beginPath();
+        ctx.strokeStyle = this.color;
+        ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.lineWidth = 3;
+    }
+
+    // Check bounds method for evil circle to prevent it from going off screen
+    checkBounds() {
+        if (this.x + this.size >= width) {
+            this.velX = -Math.abs(this.velX);
+        }
+
+        if (this.x - this.size <= 0) {
+            this.velX = Math.abs(this.velX);
+        }
+
+        if (this.y + this.size >= height) {
+            this.velY = -Math.abs(this.velY);
+        }
+
+        if (this.y - this.size <= 0) {
+            this.velY = Math.abs(this.velY);
+        }
     }
 }
 
