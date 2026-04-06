@@ -148,6 +148,8 @@ class EvilCircle extends Shape {
 
                 if (distance < this.size + ball.size) {
                     ball.exists = false;
+                    count--;
+                    para.textContent = 'Ball count: ' + count;
                 }
             }
         }
