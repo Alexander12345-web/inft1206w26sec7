@@ -50,19 +50,19 @@ class Ball extends Shape {
 
     update() {
         if (this.x + this.size >= width) {
-            this.x = -Math.abs(this.velX);
+            this.velX = -(this.velX);
         }
 
         if (this.x - this.size <= 0) {
-            this.x = Math.abs(this.velX);
+            this.velX = -(this.velX);
         }
 
         if (this.y + this.size >= height) {
-            this.y = -Math.abs(this.velY);
+            this.velY = -(this.velY);
         }
 
         if (this.y - this.size <= 0) {
-            this.y = Math.abs(this.velY);
+            this.velY = -(this.velY);
         }
 
         this.x += this.velX;
