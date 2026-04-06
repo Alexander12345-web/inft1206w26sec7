@@ -38,6 +38,7 @@ class Ball extends Shape {
         super(x, y, velX, velY);
         this.color = color;
         this.size = size;
+        this.exists = true;
     }
 
     draw() {
@@ -186,9 +187,8 @@ function loop() {
     ctx.fillRect(0, 0, width, height);
 
     for (const ball of balls) {
-        // draw starting balls then check if they exist before updating and checking for collisions
-        ball.draw();
         if (ball.exists) {
+            ball.draw();
             ball.update();
             ball.collisionDetect();
         }
