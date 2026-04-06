@@ -6,34 +6,34 @@ const height = (canvas.height = window.innerHeight);
 
 // Two helper functions
 function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function randomRGB() {
-  return `rgb(${random(0, 255)} ${random(0, 255)} ${random(0, 255)})`;
+    return `rgb(${random(0, 255)} ${random(0, 255)} ${random(0, 255)})`;
 }
 
 // Ball modeller
 class Ball {
-  constructor(x, y, velX, velY, color, size) {
-    this.x = x;
-    this.y = y;
-    this.velX = velX;
-    this.velY = velY;
-    this.color = color;
-    this.size = size;
-  }
+    constructor(x, y, velX, velY, color, size) {
+        this.x = x;
+        this.y = y;
+        this.velX = velX;
+        this.velY = velY;
+        this.color = color;
+        this.size = size;
+    }
 }
 
 // Ball class with a draw method
 class Ball {
-  // …
-  draw() {
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    ctx.fill();
-  }
+    // …
+    draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+        ctx.fill();
+    }
 }
 
 // Test ball
@@ -44,3 +44,62 @@ testBall.x;
 testBall.size;
 testBall.color;
 testBall.draw();
+
+// Updating the ball
+class Ball {
+    // …
+    update() {
+        if (this.x + this.size >= width) {
+            this.velX = -this.velX;
+        }
+
+        if (this.x - this.size <= 0) {
+            this.velX = -this.velX;
+        }
+
+        if (this.y + this.size >= height) {
+            this.velY = -this.velY;
+        }
+
+        if (this.y - this.size <= 0) {
+            this.velY = -this.velY;
+        }
+
+        this.x += this.velX;
+        this.y += this.velY;
+    }
+}
+
+// Animate the ball
+const balls = [];
+
+while (balls.length < 25) {
+    const size = random(10, 20);
+    const ball = new Ball(
+        // ball position always drawn at least one ball width
+        // away from the edge of the canvas, to avoid drawing errors
+        random(0 + size, width - size),
+        random(0 + size, height - size),
+        random(-7, 7),
+        random(-7, 7),
+        randomRGB(),
+        size,
+    );
+
+    balls.push(ball);
+}
+
+// Initialize the loop
+function loop() {
+    ctx.fillStyle = "rgb(0 0 0 / 25%)";
+    ctx.fillRect(0, 0, width, height);
+
+    for (const ball of balls) {
+        ball.draw();
+        ball.update();
+    }
+
+    requestAnimationFrame(loop);
+}
+
+loop();
