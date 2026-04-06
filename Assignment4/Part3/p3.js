@@ -23,31 +23,16 @@ class Ball {
         this.color = color;
         this.size = size;
     }
-}
 
-// Ball class with a draw method
-class Ball {
-    // …
+    // Method to draw the ball
     draw() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.fill();
     }
-}
 
-// Test ball
-const testBall = new Ball(50, 100, 4, 4, "blue", 10);
-
-// Testing test ball
-testBall.x;
-testBall.size;
-testBall.color;
-testBall.draw();
-
-// Updating the ball
-class Ball {
-    // …
+    // Method to update ball position
     update() {
         if (this.x + this.size >= width) {
             this.velX = -this.velX;
@@ -68,26 +53,31 @@ class Ball {
         this.x += this.velX;
         this.y += this.velY;
     }
+
+    // Collision detection method
+    collisionDetect() {
+        for (const ball of balls) {
+            if (this !== ball) {
+                const dx = this.x - ball.x;
+                const dy = this.y - ball.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < this.size + ball.size) {
+                    ball.color = this.color = randomRGB();
+                }
+            }
+        }
+    }
 }
 
-// Animate the ball
-const balls = [];
+// Test ball
+const testBall = new Ball(50, 100, 4, 4, "blue", 10);
 
-while (balls.length < 25) {
-    const size = random(10, 20);
-    const ball = new Ball(
-        // ball position always drawn at least one ball width
-        // away from the edge of the canvas, to avoid drawing errors
-        random(0 + size, width - size),
-        random(0 + size, height - size),
-        random(-7, 7),
-        random(-7, 7),
-        randomRGB(),
-        size,
-    );
-
-    balls.push(ball);
-}
+// Testing test ball
+testBall.x;
+testBall.size;
+testBall.color;
+testBall.draw();
 
 // Initialize the loop
 function loop() {
@@ -97,9 +87,11 @@ function loop() {
     for (const ball of balls) {
         ball.draw();
         ball.update();
+        ball.collisionDetect();
     }
 
     requestAnimationFrame(loop);
 }
 
+// Call the loop
 loop();
