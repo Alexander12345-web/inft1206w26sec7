@@ -70,6 +70,25 @@ class Ball {
     }
 }
 
+// Animate the balls and store them in an array
+const balls = [];
+
+while (balls.length < 25) {
+    const size = random(10, 20);
+    const ball = new Ball(
+        // ball position always drawn at least one ball width
+        // away from the edge of the canvas, to avoid drawing errors
+        random(0 + size, width - size),
+        random(0 + size, height - size),
+        random(-7, 7),
+        random(-7, 7),
+        randomRGB(),
+        size,
+    );
+
+    balls.push(ball);
+}
+
 // Initialize the loop
 function loop() {
     ctx.fillStyle = "rgb(0 0 0 / 25%)";
