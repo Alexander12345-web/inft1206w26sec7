@@ -1,3 +1,7 @@
+// Add constants for ball count paragraph
+const para = document.querySelector('p');
+let count = 0;
+
 // set up canvas
 
 const canvas = document.querySelector("canvas");
@@ -45,19 +49,19 @@ class Ball extends Shape {
 
     update() {
         if (this.x + this.size >= width) {
-            this.velX = -Math.abs(this.velX);
+            this.x = -Math.abs(this.velX);
         }
 
         if (this.x - this.size <= 0) {
-            this.velX = Math.abs(this.velX);
+            this.x = Math.abs(this.velX);
         }
 
         if (this.y + this.size >= height) {
-            this.velY = -Math.abs(this.velY);
+            this.y = -Math.abs(this.velY);
         }
 
         if (this.y - this.size <= 0) {
-            this.velY = Math.abs(this.velY);
+            this.y = Math.abs(this.velY);
         }
 
         this.x += this.velX;
@@ -110,27 +114,27 @@ class EvilCircle extends Shape {
     draw() {
         ctx.beginPath();
         ctx.strokeStyle = this.color;
+        ctx.lineWidth = 3;
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.stroke();
-        ctx.lineWidth = 3;
     }
 
     // Check bounds method for evil circle to prevent it from going off screen
     checkBounds() {
-        if (this.x + this.size >= width) {
-            this.velX = -Math.abs(this.velX);
+        if ((this.x + this.size) >= width) {
+            this.x -= this.size;
         }
 
-        if (this.x - this.size <= 0) {
-            this.velX = Math.abs(this.velX);
+        if ((this.x - this.size) <= 0) {
+            this.x += this.size;
         }
 
-        if (this.y + this.size >= height) {
-            this.velY = -Math.abs(this.velY);
+        if ((this.y + this.size) >= height) {
+            this.y -= this.size;
         }
 
-        if (this.y - this.size <= 0) {
-            this.velY = Math.abs(this.velY);
+        if ((this.y - this.size) <= 0) {
+            this.y += this.size;
         }
     }
 
@@ -171,7 +175,6 @@ while (balls.length < 25) {
 
 // Create evil circle and add to balls array
 const evilCircle = new EvilCircle(random(0 + 10, width - 10), random(0 + 10, height - 10));
-balls.push(evilCircle);
 
 // Changing loop function to include evil circle
 function loop() {
